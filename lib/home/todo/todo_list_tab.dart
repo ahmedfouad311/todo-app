@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todoapp/home/data/firestoreUtils.dart';
+import 'package:todoapp/home/data/todo.dart';
 import 'package:todoapp/home/todo/todo_item.dart';
 
 class TodoListTab extends StatefulWidget {
@@ -27,8 +30,9 @@ class _TodoListTabState extends State<TodoListTab> {
             },
             selectedDayPredicate: (day) {
               //el function de 3l4an 23ml select le ay yom 3ady w yzhar fe el ui
-              return isSameDay(day,
-                  selectedDay); //bydeni yom w bys2alni el yom dah 2nta 3ayzo yb2a selected walla la
+              return isSameDay(
+                  day, selectedDay); //bydeni yom w bys2alni el yom dah 2nta
+              // 3ayzo yb2a selected walla la
             },
             calendarFormat: CalendarFormat.week,
             weekendDays: [],
@@ -68,11 +72,33 @@ class _TodoListTabState extends State<TodoListTab> {
                 )),
           ),
           Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return TodoItem();
+            child: StreamBuilder<QuerySnapshot<
+                Todo>>( //3l4an el data el hatt3erd fe el widget de lazem 2stanaha mn el firestore
+              stream: getTodosCollectionWithConverter()
+              // el where 3l4an 2akaren el selectedday be el dateTime el mawgod 3l4an y7ot kol task fe el day bta3ha
+              // .where('dateTime', isEqualTo: selectedDay.getDateOnly())
+                  .snapshots(),
+              builder: (BuildContext buildContext,
+                  AsyncSnapshot<QuerySnapshot<Todo>> snapshot) {
+                if (snapshot.hasError) { // Error
+                  return Center(child: Text(snapshot.hasError.toString()));
+                }
+                else if (snapshot.connectionState ==
+                    ConnectionState.waiting) { // loading
+                  return Center(child: CircularProgressIndicator());
+                }
+                // data is ready
+                // el doc gayba el todo fa 3ayz 2a7awel el list bta3t el doc le list of
+                //  todo item w de fekrt el satr el ta7t dah
+                List<Todo> items = snapshot.data!.docs.map((doc) => doc.data())
+                    .toList();
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return TodoItem(items[index]);
+                  },
+                  itemCount: items.length,
+                );
               },
-              itemCount: 20,
             ),
           ),
         ],
