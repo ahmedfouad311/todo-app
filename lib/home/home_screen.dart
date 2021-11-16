@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/home/settings_tab.dart';
 import 'package:todoapp/home/todo/add_todo_widget.dart';
 
+import 'settings/settings_tab.dart';
 import 'todo/todo_list_tab.dart';
 
 class HomeScreen extends StatefulWidget {
