@@ -3,6 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todoapp/home/data/todo.dart';
 
+// bt5aleni 22dar 2adef function 3ala class already mawgod
+extension MyDateExtension on DateTime {
+  DateTime getDateOnly() {
+    return DateTime(this.year, this.month, this.day);
+  }
+}
+
 CollectionReference<Todo> getTodosCollectionWithConverter() {
   return FirebaseFirestore.instance.
   collection(Todo.COLLECTION_KEY).

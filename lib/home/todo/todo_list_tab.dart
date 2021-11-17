@@ -75,7 +75,8 @@ class _TodoListTabState extends State<TodoListTab> {
                 color: Colors.white,
               ),
               todayDecoration: BoxDecoration(
-                  color: Colors.black45,
+                  color: provider.isDarkMode() ? Colors.white :
+                  Colors.black45,
                   borderRadius: BorderRadius.circular(8)),
               defaultTextStyle: TextStyle(
                 color: provider.isDarkMode() ? Colors.white :
@@ -107,7 +108,11 @@ class _TodoListTabState extends State<TodoListTab> {
                 Todo>>( //3l4an el data el hatt3erd fe el widget de lazem 2stanaha mn el firestore
               stream: getTodosCollectionWithConverter()
               // el where 3l4an 2akaren el selectedday be el dateTime el mawgod 3l4an y7ot kol task fe el day bta3ha
-              // .where('dateTime', isEqualTo: selectedDay.getDateOnly())
+                  .where('dateTime',
+                  isEqualTo:
+                  selectedDay
+                      .getDateOnly()
+                      .millisecondsSinceEpoch)
                   .snapshots(),
               builder: (BuildContext buildContext,
                   AsyncSnapshot<QuerySnapshot<Todo>> snapshot) {
