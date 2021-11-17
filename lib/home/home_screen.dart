@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/home/todo/add_todo_widget.dart';
+import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/theme/my_theme_data.dart';
 
 import 'settings/settings_tab.dart';
 import 'todo/todo_list_tab.dart';
@@ -21,15 +24,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: provider.isDarkMode()
+            ? MyThemeData.DARK_PRIMARY_COLOR
+            :
+        Theme
+            .of(context)
+            .primaryColor,
         elevation: 0,
         title: Text(
-          'To Do Applicatipn',
+            'To Do Applicatipn',
+            style: TextStyle(
+              color: provider.isDarkMode() ? Colors.black :
+              Colors.white,
+            )
         ),
         centerTitle: false,
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: provider.isDarkMode()
+            ? MyThemeData.DARK_PRIMARY_COLOR
+            :
+        Theme
+            .of(context)
+            .primaryColor,
         shape: StadiumBorder( // el border el 7awalen el button
           side: BorderSide(
             color: Colors.white,
@@ -48,31 +68,49 @@ class _HomeScreenState extends State<HomeScreen> {
         clipBehavior: Clip.antiAlias,
         notchMargin: 8,
         elevation: 0,
-        child: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (index) {
-            currentIndex = index;
-            setState(() {
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: provider.isDarkMode()
+                ? Color.fromARGB(255, 20, 25, 34)
+                :
+            Colors.white,
+          ),
+          child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (index) {
+              currentIndex = index;
+              setState(() {
 
-            });
-          },
-          elevation: 0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(Icons.list,
-                size: 30,
+              });
+            },
+            elevation: 0,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                backgroundColor: provider.isDarkMode() ? Color.fromARGB(
+                    255, 20, 25, 34) :
+                Colors.white,
+                label: '',
+                icon: Icon(Icons.list,
+                  color: provider.isDarkMode() ? Colors.white :
+                  Colors.grey,
+                  size: 30,
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(Icons.settings,
-                size: 30,
+              BottomNavigationBarItem(
+                backgroundColor: provider.isDarkMode() ? Color.fromARGB(
+                    255, 20, 25, 34) :
+                Colors.white,
+                label: '',
+                icon: Icon(Icons.settings,
+                  color: provider.isDarkMode() ? Colors.white :
+                  Colors.grey,
+                  size: 30,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: tabs[currentIndex],
