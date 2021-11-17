@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todoapp/home/data/firestoreUtils.dart';
 import 'package:todoapp/home/data/todo.dart';
 import 'package:todoapp/home/todo/todo_item.dart';
+import 'package:todoapp/providers/app_config_provider.dart';
 
 class TodoListTab extends StatefulWidget {
   @override
@@ -17,11 +19,30 @@ class _TodoListTabState extends State<TodoListTab> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Column(
         children: [
           TableCalendar(
+            headerStyle: HeaderStyle(
+              titleCentered: true,
+              formatButtonDecoration: BoxDecoration(
+                border: Border.all(color: provider.isDarkMode() ? Colors.white :
+                Colors.black
+                ),
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              formatButtonTextStyle: TextStyle(
+                color: provider.isDarkMode() ? Colors.white :
+                Colors.black,
+              ),
+              titleTextStyle: TextStyle(
+                color: provider.isDarkMode() ? Colors.white :
+                Colors.black,
+              ),
+            ),
             onDaySelected: (sDay, fDay) {
               setState(() {
                 selectedDay = sDay;
@@ -57,18 +78,28 @@ class _TodoListTabState extends State<TodoListTab> {
                   color: Colors.black45,
                   borderRadius: BorderRadius.circular(8)),
               defaultTextStyle: TextStyle(
-                color: Colors.black,
+                color: provider.isDarkMode() ? Colors.white :
+                Colors.black,
               ),
               defaultDecoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                  color: provider.isDarkMode()
+                      ? Color.fromARGB(255, 20, 25, 34)
+                      :
+                  Colors.white,
+                  borderRadius: BorderRadius.circular(8)
+              ),
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: provider.isDarkMode()
+                      ? Color.fromARGB(255, 20, 25, 34)
+                      :
+                  Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 weekdayStyle: TextStyle(
-                  color: Colors.black,
+                  color: provider.isDarkMode() ? Colors.white :
+                  Colors.black,
                 )),
           ),
           Expanded(

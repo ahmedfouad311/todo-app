@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/home/data/firestoreUtils.dart';
 import 'package:todoapp/home/data/todo.dart';
+import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/theme/my_theme_data.dart';
 
 class TodoItem extends StatelessWidget {
 
@@ -11,6 +14,7 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Slidable(
       actionPane: SlidableDrawerActionPane(), //el behaviour bta3 el slider
       actions: [
@@ -88,11 +92,13 @@ class TodoItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 15),
         color: Colors.redAccent,
         child: Container(
-          color: Colors.white,
+          color: provider.isDarkMode() ? Color.fromARGB(255, 20, 25, 34) :
+          Colors.white,
           child: Container(
             height: 120,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: provider.isDarkMode() ? Color.fromARGB(255, 20, 25, 34) :
+              Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
             padding: EdgeInsets.all(15),
@@ -101,7 +107,12 @@ class TodoItem extends StatelessWidget {
                 Container(
                   width: 4,
                   height: 70,
-                  color: Theme.of(context).primaryColor,
+                  color: provider.isDarkMode()
+                      ? MyThemeData.DARK_PRIMARY_COLOR
+                      :
+                  Theme
+                      .of(context)
+                      .primaryColor,
                 ),
                 Expanded(
                   child: Padding(
@@ -113,12 +124,24 @@ class TodoItem extends StatelessWidget {
                       children: [
                         Text(
                           item.title,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: provider.isDarkMode() ? TextStyle(
+                              color: MyThemeData.DARK_PRIMARY_COLOR,
+                              fontSize: 24) :
+                          Theme
+                              .of(context)
+                              .textTheme
+                              .headline6,
                         ),
                         Text(
                           '${item.dateTime.day}/${item.dateTime.month}/${item
                               .dateTime.year}',
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: provider.isDarkMode() ? TextStyle(
+                              color: Colors.white,
+                              fontSize: 16) :
+                          Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle2,
                         ),
                       ],
                     ),
