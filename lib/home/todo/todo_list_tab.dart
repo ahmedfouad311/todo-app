@@ -72,7 +72,8 @@ class _TodoListTabState extends State<TodoListTab> {
                   // by default law ma3arft4 el primary colo byb2a blue
                   borderRadius: BorderRadius.circular(8)),
               todayTextStyle: TextStyle(
-                color: Colors.white,
+                color: provider.isDarkMode() ? Colors.black :
+                Colors.white,
               ),
               todayDecoration: BoxDecoration(
                   color: provider.isDarkMode() ? Colors.white :
