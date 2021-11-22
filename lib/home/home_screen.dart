@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/home/todo/add_todo_widget.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/settings/settings_tab.dart';
 import 'package:todoapp/theme/my_theme_data.dart';
 
-import 'settings/settings_tab.dart';
 import 'todo/todo_list_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,22 +26,32 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: provider.isDarkMode()
-            ? MyThemeData.DARK_PRIMARY_COLOR
-            :
-        Theme
-            .of(context)
-            .primaryColor,
-        elevation: 0,
-        title: Text(
-            'To Do Applicatipn',
-            style: TextStyle(
-              color: provider.isDarkMode() ? Colors.black :
-              Colors.white,
-            )
+      backgroundColor: provider.isDarkMode()
+          ? MyThemeData.DARK_BACKGROUND_COLOR
+          :
+      MyThemeData.LIGHT_BACKGROUND_COLOR,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.vertical(bottom: Radius.circular(30))),
+          backgroundColor: provider.isDarkMode()
+              ? MyThemeData.DARK_PRIMARY_COLOR
+              :
+          Theme
+              .of(context)
+              .primaryColor,
+          elevation: 0,
+          title: Text(
+              'To Do Application',
+              style: TextStyle(
+                color: provider.isDarkMode() ? Colors.black :
+                Colors.white,
+              )
+          ),
+          centerTitle: true,
         ),
-        centerTitle: false,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: provider.isDarkMode()
