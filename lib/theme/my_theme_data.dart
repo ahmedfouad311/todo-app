@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MyThemeData {
-  static const Color LIGHT_BACKGROUND_COLOR =
-      Color.fromARGB(255, 223, 236, 219);
-  static const Color DARK_BACKGROUND_COLOR =
-  Color.fromARGB(255, 6, 14, 30);
-  static const Color DARK_PRIMARY_COLOR =
-  Color.fromARGB(255, 93, 156, 236);
+  static const Color LIGHT_BACKGROUND_COLOR = Color.fromARGB(
+      255, 223, 236, 219);
+  static const Color DARK_BACKGROUND_COLOR = Color.fromARGB(255, 6, 14, 30);
+  static const Color DARK_PRIMARY_COLOR = Color.fromARGB(255, 93, 156, 236);
+  static const Color GREEN_COLOR_ISDONE = Color.fromARGB(255, 97, 231, 87);
 
   static final ThemeData LIGHT_THEME = ThemeData(
     primarySwatch: Colors.blue,

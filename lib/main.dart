@@ -20,12 +20,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<AppConfigProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'todo App',
       theme: MyThemeData.DARK_THEME,
-      themeMode: provider.appTheme,
+      themeMode: ThemeMode.system,
       routes: {
         HomeScreen.ROUTE_NAME: (context) => HomeScreen(),
       },

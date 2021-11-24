@@ -107,9 +107,7 @@ class TodoItem extends StatelessWidget {
                 Container(
                   width: 4,
                   height: 70,
-                  color: provider.isDarkMode()
-                      ? MyThemeData.DARK_PRIMARY_COLOR
-                      :
+                  color: item.isDone ? MyThemeData.GREEN_COLOR_ISDONE :
                   Theme
                       .of(context)
                       .primaryColor,
@@ -124,10 +122,14 @@ class TodoItem extends StatelessWidget {
                       children: [
                         Text(
                           item.title,
-                          style: provider.isDarkMode() ? TextStyle(
-                              color: MyThemeData.DARK_PRIMARY_COLOR,
-                              fontSize: 24) :
-                          Theme
+                          style: item.isDone ? Theme
+                              .of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(
+                            color: MyThemeData.GREEN_COLOR_ISDONE,
+                          )
+                              : Theme
                               .of(context)
                               .textTheme
                               .headline6,
@@ -147,8 +149,26 @@ class TodoItem extends StatelessWidget {
                     ),
                   ),
                 ),
+                item.isDone ? InkWell(
+                  onTap: () {
+                    editIsDone(item);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(12),
+                    child: Text(
+                      'Done!',
+                      style: TextStyle(
+                        color: MyThemeData.GREEN_COLOR_ISDONE,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ) :
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    editIsDone(item);
+                  },
                   child: Container(
                     child: Image(
                       image: AssetImage('assets/images/icon_check.png'),
