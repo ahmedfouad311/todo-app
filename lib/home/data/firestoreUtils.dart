@@ -43,3 +43,10 @@ Future<void> deleteTodo(Todo item) {
   // 7atet id mo3ayan fa hayro7 ygeb el doc de
   return documentReference.delete();
 }
+
+editIsDone(Todo item) {
+  CollectionReference<
+      Todo> collectionReference = getTodosCollectionWithConverter();
+  collectionReference.doc(item.id).update(
+      {'isDone': item.isDone ? false : true});
+}
