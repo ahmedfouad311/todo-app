@@ -50,3 +50,15 @@ editIsDone(Todo item) {
   collectionReference.doc(item.id).update(
       {'isDone': item.isDone ? false : true});
 }
+
+Future<void> updateTodoDetails(Todo todoItem) {
+  CollectionReference<
+      Todo> collectionReference = getTodosCollectionWithConverter();
+  return collectionReference.doc(todoItem.id).update({
+    'title': todoItem.title,
+    'description': todoItem.description,
+    'dateTime': todoItem.dateTime
+        .getDateOnly()
+        .millisecondsSinceEpoch
+  });
+}

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/home/home_screen.dart';
+import 'package:todoapp/home/todo/edit_screen.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
 import 'package:todoapp/theme/my_theme_data.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       routes: {
         HomeScreen.ROUTE_NAME: (context) => HomeScreen(),
+        EditScreen.ROUTE_NAME: (context) => EditScreen()
       },
       initialRoute: HomeScreen.ROUTE_NAME,
     );
